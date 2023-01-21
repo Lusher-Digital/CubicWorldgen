@@ -4,9 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="993488ce-5650-440b-b9a3-90cd0636ce4c" name="Changes" comment="Update gradle workflow">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/gradle.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/gradle.yml" afterDir="false" />
+    <list default="true" id="993488ce-5650-440b-b9a3-90cd0636ce4c" name="Changes" comment="Create Mesh, Renderer, Shader, Window.">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/graphics/Mesh.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/graphics/Renderer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/graphics/Shader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/window/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/CubicWorldgen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/CubicWorldgen.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +25,16 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view />
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -30,6 +48,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectId" id="2KcSSm1uFf2SCvQaTCWyhsjB8kC" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -47,9 +68,15 @@
     "dart.analysis.tool.window.visible": "false",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/main" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.CubicWorldgen">
     <configuration name="SetupTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -199,12 +226,14 @@
     <MESSAGE value="Create project files" />
     <MESSAGE value="Add example code" />
     <MESSAGE value="Update gradle workflow" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update gradle workflow" />
+    <MESSAGE value="Create Mesh, Renderer, Shader, Window." />
+    <option name="LAST_COMMIT_MESSAGE" value="Create Mesh, Renderer, Shader, Window." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CubicWorldgen$Tests_in__CubicWorldgen_test_.ic" NAME="Tests in 'CubicWorldgen.test' Coverage Results" MODIFIED="1674277472990" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/CubicWorldgen$CubicWorldgen.ic" NAME="CubicWorldgen Coverage Results" MODIFIED="1674278597298" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
