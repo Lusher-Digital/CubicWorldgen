@@ -16,6 +16,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
     private final long window;
+    private final Input input;
     private final Renderer renderer;
 
     public Window(String title, int width, int height, boolean maximised, boolean fullscreen) {
@@ -37,6 +38,7 @@ public class Window {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, 1);
         glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_TRUE);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
         Dimension vidmode = getVideoMode();
 
@@ -76,6 +78,8 @@ public class Window {
         // Enable v-sync
         glfwSwapInterval(1);
 
+        input = new Input(this);
+
         float aspectRatio = (float) windowSize.width / (float) windowSize.height;
         renderer = new Renderer(aspectRatio);
 
@@ -83,18 +87,75 @@ public class Window {
     }
 
     public void loop() {
+        final int UPS = 60;
+        final int FPS = 60;
+
+        long initialTime = System.nanoTime();
+        final float timeU = 1000000000.0f / UPS;
+        final float timeF = 1000000000.0f / FPS;
+        float deltaU = 0, deltaF = 0;
+        int frames = 0, ticks = 0, totalTicks = 0;
+        long timer = System.currentTimeMillis();
+
         while (!shouldClose()) {
-            if (glfwGetCurrentContext() != window) {
-                new RuntimeException("GLFW context is not current").printStackTrace();
-                System.exit(1);
+            long currentTime = System.nanoTime();
+            deltaU += (currentTime - initialTime) / timeU;
+            deltaF += (currentTime - initialTime) / timeF;
+            initialTime = currentTime;
+
+            if (deltaU >= 1) {
+                glfwPollEvents();
+                ticks++;
+                totalTicks++;
+
+                // Update
+
+                deltaU--;
             }
 
-            renderer.render();
+            if (deltaF >= 1) {
+                update();
+                renderer.render();
+                glfwSwapBuffers(window);
 
-            glfwSwapBuffers(window);
+                frames++;
+                deltaF--;
+            }
 
-            glfwPollEvents();
+            if (System.currentTimeMillis() - timer > 1000) {
+                System.out.printf("UPS: %s, FPS: %s, TotalTicks: %s%n", ticks, frames, totalTicks);
+                frames = 0;
+                ticks = 0;
+                timer += 1000;
+            }
         }
+    }
+
+    public void update() {
+        if (input.isKeyPressed(GLFW_KEY_W)) {
+            renderer.moveCamera(0, 0, 1);
+        }
+        if (input.isKeyPressed(GLFW_KEY_S)) {
+            renderer.moveCamera(0, 0, -1);
+        }
+        if (input.isKeyPressed(GLFW_KEY_A)) {
+            renderer.moveCamera(-1, 0, 0);
+        }
+        if (input.isKeyPressed(GLFW_KEY_D)) {
+            renderer.moveCamera(1, 0, 0);
+        }
+        if (input.isKeyPressed(GLFW_KEY_SPACE)) {
+            renderer.moveCamera(0, 1, 0);
+        }
+        if (input.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
+            renderer.moveCamera(0, -1, 0);
+        }
+
+        renderer.rotateCamera(input.getMouseDX(), input.getMouseDY());
+
+        input.update();
+
+        renderer.update();
     }
 
     public boolean shouldClose() {
@@ -128,4 +189,15 @@ public class Window {
         return new Dimension(vidmode.width(), vidmode.height());
     }
 
+    public long getHandle() {
+        return window;
+    }
+
+    public float getWidth() {
+        return getWindowSize().width;
+    }
+
+    public float getHeight() {
+        return getWindowSize().height;
+    }
 }
