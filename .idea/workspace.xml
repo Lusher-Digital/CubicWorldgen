@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="993488ce-5650-440b-b9a3-90cd0636ce4c" name="Changes" comment="Create Camera class">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/graphics/Camera.java" afterDir="false" />
+    <list default="true" id="993488ce-5650-440b-b9a3-90cd0636ce4c" name="Changes" comment="Add camera movement">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/window/Input.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/graphics/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/graphics/Camera.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/graphics/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/graphics/Renderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/window/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/window/Window.java" afterDir="false" />
     </list>
@@ -49,7 +51,7 @@
     <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/create-shaders" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -248,7 +250,8 @@
     <MESSAGE value="Create Mesh, Renderer, Shader, Window." />
     <MESSAGE value="Create shaders" />
     <MESSAGE value="Create Camera class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create Camera class" />
+    <MESSAGE value="Add camera movement" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add camera movement" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

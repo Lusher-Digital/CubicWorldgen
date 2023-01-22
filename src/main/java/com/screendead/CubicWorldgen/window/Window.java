@@ -16,6 +16,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
     private final long window;
+    private final Input input;
     private final Renderer renderer;
 
     public Window(String title, int width, int height, boolean maximised, boolean fullscreen) {
@@ -37,6 +38,7 @@ public class Window {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, 1);
         glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_TRUE);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
         Dimension vidmode = getVideoMode();
 
@@ -76,6 +78,8 @@ public class Window {
         // Enable v-sync
         glfwSwapInterval(1);
 
+        input = new Input(this);
+
         float aspectRatio = (float) windowSize.width / (float) windowSize.height;
         renderer = new Renderer(aspectRatio);
 
@@ -90,10 +94,33 @@ public class Window {
             }
 
             renderer.render();
-
             glfwSwapBuffers(window);
 
             glfwPollEvents();
+
+
+            if (input.isKeyPressed(GLFW_KEY_W)) {
+                renderer.moveCamera(0, 0, 1);
+            }
+            if (input.isKeyPressed(GLFW_KEY_S)) {
+                renderer.moveCamera(0, 0, -1);
+            }
+            if (input.isKeyPressed(GLFW_KEY_A)) {
+                renderer.moveCamera(-1, 0, 0);
+            }
+            if (input.isKeyPressed(GLFW_KEY_D)) {
+                renderer.moveCamera(1, 0, 0);
+            }
+            if (input.isKeyPressed(GLFW_KEY_SPACE)) {
+                renderer.moveCamera(0, 1, 0);
+            }
+            if (input.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
+                renderer.moveCamera(0, -1, 0);
+            }
+
+            renderer.rotateCamera(input.getMouseDX(), input.getMouseDY());
+
+            input.update();
         }
     }
 
@@ -128,4 +155,15 @@ public class Window {
         return new Dimension(vidmode.width(), vidmode.height());
     }
 
+    public long getHandle() {
+        return window;
+    }
+
+    public float getWidth() {
+        return getWindowSize().width;
+    }
+
+    public float getHeight() {
+        return getWindowSize().height;
+    }
 }

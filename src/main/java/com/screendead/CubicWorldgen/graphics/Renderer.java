@@ -25,7 +25,7 @@ public class Renderer {
 
         camera = new Camera(
                 new Vector3f(0.0f, 0.0f, -3.0f),
-                new Vector3f(0.0f, 0.0f, 1.0f),
+                90, 0,
                 75.0f,
                 aspect,
                 0.1f,
@@ -82,6 +82,14 @@ public class Renderer {
         mesh.render();
 
         Shader.unbind();
+    }
+
+    public void moveCamera(float x, float y, float z) {
+        camera.move(x, y, z);
+    }
+
+    public void rotateCamera(float dx, float dy) {
+        camera.rotate(dx, dy);
     }
 
     public void destroy() {
