@@ -8,7 +8,7 @@ public class Main {
     }
 
     public void run() {
-        Window window = new Window("Cubic Worldgen", 640, 480, false, false);
+        Window window = new Window("Cubic Worldgen", 640, 480, true, false);
 
         window.loop();
 
