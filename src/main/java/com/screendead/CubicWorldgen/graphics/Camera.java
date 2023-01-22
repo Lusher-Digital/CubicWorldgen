@@ -5,11 +5,14 @@ import org.joml.Vector3f;
 
 @SuppressWarnings("unused")
 public class Camera {
-    public static final float SPEED = 0.1f;
+    public static final float SPEED = 0.01f;
     private static final float HORZ_SENSITIVITY = 0.1f;
     private static final float VERT_SENSITIVITY = 0.1f;
 
     private final Vector3f position;
+    private final Vector3f velocity;
+    private final Vector3f acceleration;
+
     private float horizontalAngle; // degrees
     private float verticalAngle; // degrees
     private float fov;
@@ -19,6 +22,8 @@ public class Camera {
 
     public Camera(Vector3f position, float horizontalAngle, float verticalAngle, float fov, float aspectRatio, float nearPlane, float farPlane) {
         this.position = position;
+        this.velocity = new Vector3f();
+        this.acceleration = new Vector3f();
         this.horizontalAngle = horizontalAngle;
         this.verticalAngle = verticalAngle;
         this.fov = fov;
@@ -59,7 +64,14 @@ public class Camera {
                 .add(new Vector3f(right).mul(x))
                 .add(new Vector3f(up).mul(y));
 
-        position.add(movement.normalize(SPEED));
+        acceleration.add(movement.normalize(SPEED));
+    }
+
+    public void update() {
+        velocity.add(acceleration);
+        position.add(velocity);
+        acceleration.zero();
+        velocity.mul(0.9f);
     }
 
     public void rotate(float dx, float dy) {

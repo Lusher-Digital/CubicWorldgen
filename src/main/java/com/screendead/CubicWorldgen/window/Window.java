@@ -87,41 +87,75 @@ public class Window {
     }
 
     public void loop() {
+        final int UPS = 60;
+        final int FPS = 60;
+
+        long initialTime = System.nanoTime();
+        final float timeU = 1000000000.0f / UPS;
+        final float timeF = 1000000000.0f / FPS;
+        float deltaU = 0, deltaF = 0;
+        int frames = 0, ticks = 0, totalTicks = 0;
+        long timer = System.currentTimeMillis();
+
         while (!shouldClose()) {
-            if (glfwGetCurrentContext() != window) {
-                new RuntimeException("GLFW context is not current").printStackTrace();
-                System.exit(1);
+            long currentTime = System.nanoTime();
+            deltaU += (currentTime - initialTime) / timeU;
+            deltaF += (currentTime - initialTime) / timeF;
+            initialTime = currentTime;
+
+            if (deltaU >= 1) {
+                glfwPollEvents();
+                ticks++;
+                totalTicks++;
+
+                // Update
+
+                deltaU--;
             }
 
-            renderer.render();
-            glfwSwapBuffers(window);
+            if (deltaF >= 1) {
+                update();
+                renderer.render();
+                glfwSwapBuffers(window);
 
-            glfwPollEvents();
-
-
-            if (input.isKeyPressed(GLFW_KEY_W)) {
-                renderer.moveCamera(0, 0, 1);
-            }
-            if (input.isKeyPressed(GLFW_KEY_S)) {
-                renderer.moveCamera(0, 0, -1);
-            }
-            if (input.isKeyPressed(GLFW_KEY_A)) {
-                renderer.moveCamera(-1, 0, 0);
-            }
-            if (input.isKeyPressed(GLFW_KEY_D)) {
-                renderer.moveCamera(1, 0, 0);
-            }
-            if (input.isKeyPressed(GLFW_KEY_SPACE)) {
-                renderer.moveCamera(0, 1, 0);
-            }
-            if (input.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
-                renderer.moveCamera(0, -1, 0);
+                frames++;
+                deltaF--;
             }
 
-            renderer.rotateCamera(input.getMouseDX(), input.getMouseDY());
-
-            input.update();
+            if (System.currentTimeMillis() - timer > 1000) {
+                System.out.printf("UPS: %s, FPS: %s, TotalTicks: %s%n", ticks, frames, totalTicks);
+                frames = 0;
+                ticks = 0;
+                timer += 1000;
+            }
         }
+    }
+
+    public void update() {
+        if (input.isKeyPressed(GLFW_KEY_W)) {
+            renderer.moveCamera(0, 0, 1);
+        }
+        if (input.isKeyPressed(GLFW_KEY_S)) {
+            renderer.moveCamera(0, 0, -1);
+        }
+        if (input.isKeyPressed(GLFW_KEY_A)) {
+            renderer.moveCamera(-1, 0, 0);
+        }
+        if (input.isKeyPressed(GLFW_KEY_D)) {
+            renderer.moveCamera(1, 0, 0);
+        }
+        if (input.isKeyPressed(GLFW_KEY_SPACE)) {
+            renderer.moveCamera(0, 1, 0);
+        }
+        if (input.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
+            renderer.moveCamera(0, -1, 0);
+        }
+
+        renderer.rotateCamera(input.getMouseDX(), input.getMouseDY());
+
+        input.update();
+
+        renderer.update();
     }
 
     public boolean shouldClose() {
