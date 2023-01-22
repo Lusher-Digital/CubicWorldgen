@@ -1,23 +1,36 @@
 package com.screendead.CubicWorldgen.graphics;
 
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.GL_MULTISAMPLE;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 
 public class Renderer {
     private final Shader shader;
+    private final Camera camera;
     private final Mesh mesh;
-    private final int frameBufferWidth;
-    private final int frameBufferHeight;
 
-    public Renderer(int frameBufferWidth, int frameBufferHeight) {
-        this.frameBufferWidth = frameBufferWidth;
-        this.frameBufferHeight = frameBufferHeight;
-
+    public Renderer(float aspect) {
         GL.createCapabilities();
         glClearColor(0.0f, 0.0f, 0.1f, 0.0f);
+
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
+        glFrontFace(GL_CW);
+        glEnable(GL_MULTISAMPLE);
+
+        camera = new Camera(
+                new Vector3f(0.0f, 0.0f, -3.0f),
+                new Vector3f(0.0f, 0.0f, 1.0f),
+                75.0f,
+                aspect,
+                0.1f,
+                1000.0f);
+
 
         float[] vertices = new float[]{
                 -0.5f, 0.5f, 0.0f,
@@ -61,18 +74,11 @@ public class Renderer {
         shader.bind();
 
         shader.setUniform("model", new Matrix4f().identity());
-        shader.setUniform("view", new Matrix4f().translate(0.0f, 0.0f, -3.0f).lookAt(
-                0.0f, 0.0f, 0.0f,
-                0.0f, 0.0f, -1.0f,
-                0.0f, 1.0f, 0.0f));
-        shader.setUniform("projection", new Matrix4f().perspective(
-                (float) Math.toRadians(45.0f),
-                (float) frameBufferWidth / (float) frameBufferHeight,
-                0.1f,
-                100.0f));
+        shader.setUniform("view", camera.getViewMatrix());
+        shader.setUniform("projection", camera.getProjectionMatrix());
 
         // enable wireframes
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         mesh.render();
 
         Shader.unbind();

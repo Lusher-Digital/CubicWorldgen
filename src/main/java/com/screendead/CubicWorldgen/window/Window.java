@@ -76,10 +76,8 @@ public class Window {
         // Enable v-sync
         glfwSwapInterval(1);
 
-        renderer = new Renderer(
-                windowSize.width,
-                windowSize.height
-        );
+        float aspectRatio = (float) windowSize.width / (float) windowSize.height;
+        renderer = new Renderer(aspectRatio);
 
         glfwShowWindow(window);
     }
