@@ -150,6 +150,7 @@ public class Window {
         if (input.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
             renderer.moveCamera(0, -1, 0);
         }
+        renderer.wireframe = input.isKeyPressed(GLFW_KEY_PERIOD);
 
         renderer.rotateCamera(input.getMouseDX(), input.getMouseDY());
 

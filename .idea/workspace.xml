@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="993488ce-5650-440b-b9a3-90cd0636ce4c" name="Changes" comment="Make camera movement smooth">
+    <list default="true" id="993488ce-5650-440b-b9a3-90cd0636ce4c" name="Changes" comment="Draw grass block">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/world/BlockType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/world/World.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/graphics/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/graphics/Camera.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/graphics/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/graphics/Renderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/window/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/screendead/CubicWorldgen/window/Window.java" afterDir="false" />
     </list>
@@ -33,6 +34,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -256,7 +258,8 @@
     <MESSAGE value="Create Camera class" />
     <MESSAGE value="Add camera movement" />
     <MESSAGE value="Make camera movement smooth" />
-    <option name="LAST_COMMIT_MESSAGE" value="Make camera movement smooth" />
+    <MESSAGE value="Draw grass block" />
+    <option name="LAST_COMMIT_MESSAGE" value="Draw grass block" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
