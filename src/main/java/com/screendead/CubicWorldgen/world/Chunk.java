@@ -1,10 +1,7 @@
 package com.screendead.CubicWorldgen.world;
 
-import com.screendead.CubicWorldgen.graphics.Face;
-import com.screendead.CubicWorldgen.graphics.Facing;
 import com.screendead.CubicWorldgen.graphics.Mesh;
 import org.joml.Vector3f;
-import org.joml.Vector3i;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,32 +41,123 @@ public class Chunk {
                         continue;
                     }
 
-                    BlockType[] neighbors = new BlockType[6];
-                    neighbors[Facing.NORTH.ordinal()] = getBlock(x, y, z - 1);
-                    neighbors[Facing.SOUTH.ordinal()] = getBlock(x, y, z + 1);
-                    neighbors[Facing.EAST.ordinal()] = getBlock(x + 1, y, z);
-                    neighbors[Facing.WEST.ordinal()] = getBlock(x - 1, y, z);
-                    neighbors[Facing.UP.ordinal()] = getBlock(x, y + 1, z);
-                    neighbors[Facing.DOWN.ordinal()] = getBlock(x, y - 1, z);
+                    Vector3f color = block.getColor();
 
-                    for (int i = 0; i < 6; i++) {
-                        if (neighbors[i] == BlockType.AIR) {
-                            Face face = block.getFace(
-                                    new Vector3i(x, y, z),
-                                    Facing.values()[i]
-                            );
-                            vertices.addAll(face.getFace());
-                        }
+                    Vector3f[] blockVertices = new Vector3f[8];
+                    blockVertices[0] = new Vector3f(x, y, z);
+                    blockVertices[1] = new Vector3f(x + 1, y, z);
+                    blockVertices[2] = new Vector3f(x + 1, y + 1, z);
+                    blockVertices[3] = new Vector3f(x, y + 1, z);
+                    blockVertices[4] = new Vector3f(x, y, z + 1);
+                    blockVertices[5] = new Vector3f(x + 1, y, z + 1);
+                    blockVertices[6] = new Vector3f(x + 1, y + 1, z + 1);
+                    blockVertices[7] = new Vector3f(x, y + 1, z + 1);
+
+                    Vector3f[] blockColors = new Vector3f[8];
+                    Arrays.fill(blockColors, color);
+
+                    /* REMEMBER: Culling is enabled and CCW back face is culled. */
+
+                    // +Y
+                    if (getBlock(x, y + 1, z) == BlockType.AIR) {
+                        vertices.add(blockVertices[2]);
+                        vertices.add(blockVertices[3]);
+                        vertices.add(blockVertices[7]);
+                        vertices.add(blockVertices[2]);
+                        vertices.add(blockVertices[7]);
+                        vertices.add(blockVertices[6]);
+
+                        colors.add(blockColors[2]);
+                        colors.add(blockColors[3]);
+                        colors.add(blockColors[7]);
+                        colors.add(blockColors[2]);
+                        colors.add(blockColors[7]);
+                        colors.add(blockColors[6]);
                     }
 
-                    for (int i = 0; i < 6; i++) {
-                        if (neighbors[i] == BlockType.AIR) {
-                            Vector3f color = block.getColor();
+                    // -Y
+                    if (getBlock(x, y - 1, z) == BlockType.AIR) {
+                        vertices.add(blockVertices[0]);
+                        vertices.add(blockVertices[1]);
+                        vertices.add(blockVertices[5]);
+                        vertices.add(blockVertices[0]);
+                        vertices.add(blockVertices[5]);
+                        vertices.add(blockVertices[4]);
 
-                            for (int j = 0; j < 6; j++) {
-                                colors.add(color);
-                            }
-                        }
+                        colors.add(blockColors[0]);
+                        colors.add(blockColors[1]);
+                        colors.add(blockColors[5]);
+                        colors.add(blockColors[0]);
+                        colors.add(blockColors[5]);
+                        colors.add(blockColors[4]);
+                    }
+
+                    // +X
+                    if (getBlock(x + 1, y, z) == BlockType.AIR) {
+                        vertices.add(blockVertices[1]);
+                        vertices.add(blockVertices[6]);
+                        vertices.add(blockVertices[5]);
+                        vertices.add(blockVertices[1]);
+                        vertices.add(blockVertices[2]);
+                        vertices.add(blockVertices[6]);
+
+                        colors.add(blockColors[1]);
+                        colors.add(blockColors[6]);
+                        colors.add(blockColors[5]);
+                        colors.add(blockColors[1]);
+                        colors.add(blockColors[2]);
+                        colors.add(blockColors[6]);
+                    }
+
+                    // -X
+                    if (getBlock(x - 1, y, z) == BlockType.AIR) {
+                        vertices.add(blockVertices[0]);
+                        vertices.add(blockVertices[4]);
+                        vertices.add(blockVertices[7]);
+                        vertices.add(blockVertices[0]);
+                        vertices.add(blockVertices[7]);
+                        vertices.add(blockVertices[3]);
+
+                        colors.add(blockColors[0]);
+                        colors.add(blockColors[4]);
+                        colors.add(blockColors[7]);
+                        colors.add(blockColors[0]);
+                        colors.add(blockColors[7]);
+                        colors.add(blockColors[3]);
+                    }
+
+                    // +Z
+                    if (getBlock(x, y, z + 1) == BlockType.AIR) {
+                        vertices.add(blockVertices[4]);
+                        vertices.add(blockVertices[5]);
+                        vertices.add(blockVertices[6]);
+                        vertices.add(blockVertices[4]);
+                        vertices.add(blockVertices[6]);
+                        vertices.add(blockVertices[7]);
+
+                        colors.add(blockColors[4]);
+                        colors.add(blockColors[5]);
+                        colors.add(blockColors[6]);
+                        colors.add(blockColors[4]);
+                        colors.add(blockColors[6]);
+                        colors.add(blockColors[7]);
+                    }
+
+                    // -Z
+                    if (getBlock(x, y, z - 1) == BlockType.AIR) {
+                        vertices.add(blockVertices[0]);
+                        vertices.add(blockVertices[3]);
+                        vertices.add(blockVertices[2]);
+                        vertices.add(blockVertices[0]);
+                        vertices.add(blockVertices[2]);
+                        vertices.add(blockVertices[1]);
+
+                        colors.add(blockColors[0]);
+                        colors.add(blockColors[3]);
+                        colors.add(blockColors[2]);
+                        colors.add(blockColors[0]);
+                        colors.add(blockColors[2]);
+                        colors.add(blockColors[1]);
                     }
                 }
             }
@@ -79,15 +167,16 @@ public class Chunk {
         float[] _colors = new float[colors.size() * 3];
 
         for (int i = 0; i < vertices.size(); i++) {
-            _vertices[i * 3] = vertices.get(i).x;
-            _vertices[i * 3 + 1] = vertices.get(i).y;
-            _vertices[i * 3 + 2] = vertices.get(i).z;
-        }
+            Vector3f vertex = vertices.get(i);
+            Vector3f color = colors.get(i);
 
-        for (int i = 0; i < colors.size(); i++) {
-            _colors[i * 3] = colors.get(i).x;
-            _colors[i * 3 + 1] = colors.get(i).y;
-            _colors[i * 3 + 2] = colors.get(i).z;
+            _vertices[i * 3] = vertex.x;
+            _vertices[i * 3 + 1] = vertex.y;
+            _vertices[i * 3 + 2] = vertex.z;
+
+            _colors[i * 3] = color.x;
+            _colors[i * 3 + 1] = color.y;
+            _colors[i * 3 + 2] = color.z;
         }
 
         mesh = new Mesh(GL_STATIC_DRAW, _vertices, _colors);

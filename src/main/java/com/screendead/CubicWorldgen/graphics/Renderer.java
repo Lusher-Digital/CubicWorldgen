@@ -19,14 +19,13 @@ public class Renderer {
         glClearColor(0.0f, 0.0f, 0.1f, 0.0f);
 
         glEnable(GL_DEPTH_TEST);
-//        glEnable(GL_CULL_FACE);
-//        glCullFace(GL_BACK);
-//        glFrontFace(GL_CCW);
-//        glEnable(GL_MULTISAMPLE);
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
+        glFrontFace(GL_CCW);
 
         camera = new Camera(
-                new Vector3f(0.0f, 0.0f, -3.0f),
-                90, 0,
+                new Vector3f(-4.0f, 20.0f, -4.0f),
+                45, -40,
                 75.0f,
                 aspect,
                 0.1f,

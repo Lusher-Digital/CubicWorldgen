@@ -1,9 +1,6 @@
 package com.screendead.CubicWorldgen.world;
 
-import com.screendead.CubicWorldgen.graphics.Face;
-import com.screendead.CubicWorldgen.graphics.Facing;
 import org.joml.Vector3f;
-import org.joml.Vector3i;
 
 @SuppressWarnings("unused")
 public enum BlockType {
@@ -39,20 +36,5 @@ public enum BlockType {
 
     public Vector3f getColor() {
         return new Vector3f(getR(), getG(), getB());
-    }
-
-    public Face[] getFaces(Vector3i position) {
-        return new Face[] {
-                new Face(position, Facing.NORTH),
-                new Face(position, Facing.SOUTH),
-                new Face(position, Facing.EAST),
-                new Face(position, Facing.WEST),
-                new Face(position, Facing.UP),
-                new Face(position, Facing.DOWN)
-        };
-    }
-
-    public Face getFace(Vector3i position, Facing facing) {
-        return new Face(position, facing);
     }
 }
