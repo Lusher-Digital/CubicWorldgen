@@ -10,7 +10,7 @@ public class Mesh {
     private final List<Integer> vbos = new ArrayList<>();
     private final int count;
 
-    public Mesh(int mode, float[] vertices, float[] colors) {
+    public Mesh(int mode, float[] vertices, float[] colors, float[] lightLevels, float[] lightColors) {
         count = vertices.length;
 
         vao = glGenVertexArrays();
@@ -29,6 +29,23 @@ public class Mesh {
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, colors, mode);
         glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
+
+        // Light levels
+        vbo = glGenBuffers();
+        vbos.add(vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, lightLevels, mode);
+        glVertexAttribPointer(2, 1, GL_FLOAT, false, 0, 0);
+
+        // Light colors
+        vbo = glGenBuffers();
+        vbos.add(vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, lightColors, mode);
+        glVertexAttribPointer(3, 3, GL_FLOAT, false, 0, 0);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
     }
 
     public void render() {

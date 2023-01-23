@@ -1,9 +1,13 @@
 package com.screendead.CubicWorldgen.graphics;
 
+import com.screendead.CubicWorldgen.graphics.lighting.Light;
+import com.screendead.CubicWorldgen.graphics.lighting.PointLight;
 import com.screendead.CubicWorldgen.world.World;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
+
+import java.util.ArrayList;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -16,12 +20,14 @@ public class Renderer {
 
     public Renderer(float aspect) {
         GL.createCapabilities();
-        glClearColor(0.0f, 0.0f, 0.1f, 0.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
         glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_BACK);
-        glFrontFace(GL_CCW);
+//        glEnable(GL_CULL_FACE);
+//        glCullFace(GL_BACK);
+//        glFrontFace(GL_CCW);
+
+        world = new World();
 
         camera = new Camera(
                 new Vector3f(-4.0f, 20.0f, -4.0f),
@@ -30,8 +36,6 @@ public class Renderer {
                 aspect,
                 0.1f,
                 1000.0f);
-
-        world = new World();
 
         shader = new Shader(
                 "/shaders/basic.vertex.glsl",

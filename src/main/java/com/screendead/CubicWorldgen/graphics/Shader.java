@@ -49,6 +49,8 @@ public class Shader {
         // Set locations for data to be sent to the vertex shader
         glBindAttribLocation(program, 0, "position");
         glBindAttribLocation(program, 1, "color");
+        glBindAttribLocation(program, 2, "lightLevel");
+        glBindAttribLocation(program, 3, "lightColor");
 
         glBindVertexArray(glGenVertexArrays());
 
