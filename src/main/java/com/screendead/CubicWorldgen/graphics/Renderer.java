@@ -6,7 +6,6 @@ import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.GL_MULTISAMPLE;
 
 public class Renderer {
     private final Shader shader;
@@ -23,11 +22,10 @@ public class Renderer {
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
         glFrontFace(GL_CCW);
-        glEnable(GL_MULTISAMPLE);
 
         camera = new Camera(
-                new Vector3f(0.0f, 0.0f, -3.0f),
-                90, 0,
+                new Vector3f(-4.0f, 20.0f, -4.0f),
+                45, -40,
                 75.0f,
                 aspect,
                 0.1f,
@@ -43,8 +41,8 @@ public class Renderer {
         shader.addUniform("projection");
     }
 
-    public void update() {
-        camera.update();
+    public void update(int ticksToComplete) {
+        camera.update(ticksToComplete);
     }
 
     public void render() {

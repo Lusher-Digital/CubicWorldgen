@@ -97,6 +97,8 @@ public class Window {
         int frames = 0, ticks = 0, totalTicks = 0;
         long timer = System.currentTimeMillis();
 
+        float millisecondsTick = 0, millisecondsFrame = 0;
+
         while (!shouldClose()) {
             long currentTime = System.nanoTime();
             deltaU += (currentTime - initialTime) / timeU;
@@ -108,14 +110,25 @@ public class Window {
                 ticks++;
                 totalTicks++;
 
-                // Update
+                long start = System.currentTimeMillis();
+
+                int ticksToComplete = (int) deltaU;
+                update(ticksToComplete);
+
+                long end = System.currentTimeMillis();
+                millisecondsTick += end - start;
 
                 deltaU--;
             }
 
             if (deltaF >= 1) {
-                update();
+                long start = System.currentTimeMillis();
+
                 renderer.render();
+
+                long end = System.currentTimeMillis();
+                millisecondsFrame += end - start;
+
                 glfwSwapBuffers(window);
 
                 frames++;
@@ -124,6 +137,11 @@ public class Window {
 
             if (System.currentTimeMillis() - timer > 1000) {
                 System.out.printf("UPS: %s, FPS: %s, TotalTicks: %s%n", ticks, frames, totalTicks);
+                System.out.printf("Milliseconds per tick: %s, milliseconds per frame: %s (%s max for 60fps)%n",
+                        millisecondsTick / ticks, millisecondsFrame / frames, 1000 / 60);
+                System.out.printf("Max ticks per second: %s, max frames per second: %s%n",
+                        1000 / (millisecondsTick / ticks), 1000 / (millisecondsFrame / frames));
+                System.out.println();
                 frames = 0;
                 ticks = 0;
                 timer += 1000;
@@ -131,7 +149,7 @@ public class Window {
         }
     }
 
-    public void update() {
+    public void update(int ticksToComplete) {
         if (input.isKeyPressed(GLFW_KEY_W)) {
             renderer.moveCamera(0, 0, 1);
         }
@@ -156,7 +174,7 @@ public class Window {
 
         input.update();
 
-        renderer.update();
+        renderer.update(ticksToComplete);
     }
 
     public boolean shouldClose() {

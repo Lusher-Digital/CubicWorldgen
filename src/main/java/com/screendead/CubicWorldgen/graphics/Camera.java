@@ -67,6 +67,11 @@ public class Camera {
         acceleration.add(movement.normalize(SPEED));
     }
 
+    public void update(int ticksToComplete) {
+        for (int i = 0; i < ticksToComplete; i++)
+            update();
+    }
+
     public void update() {
         velocity.add(acceleration);
         position.add(velocity);
