@@ -12,16 +12,18 @@ public class Renderer {
     private final Camera camera;
     private final World world;
 
-    public boolean wireframe = false;
+    public boolean wireframe = true;
 
     public Renderer(float aspect) {
         GL.createCapabilities();
-        glClearColor(0.0f, 0.0f, 0.1f, 0.0f);
+        glClearColor(0.0f, 0.1f, 0.1f, 1.0f);
 
         glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_BACK);
-        glFrontFace(GL_CCW);
+//        glEnable(GL_CULL_FACE);
+//        glCullFace(GL_BACK);
+//        glFrontFace(GL_CCW);
+
+        world = new World();
 
         camera = new Camera(
                 new Vector3f(-4.0f, 20.0f, -4.0f),
@@ -30,8 +32,6 @@ public class Renderer {
                 aspect,
                 0.1f,
                 1000.0f);
-
-        world = new World();
 
         shader = new Shader(
                 "/shaders/basic.vertex.glsl",

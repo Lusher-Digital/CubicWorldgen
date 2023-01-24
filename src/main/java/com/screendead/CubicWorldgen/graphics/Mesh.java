@@ -10,7 +10,7 @@ public class Mesh {
     private final List<Integer> vbos = new ArrayList<>();
     private final int count;
 
-    public Mesh(int mode, float[] vertices, float[] colors) {
+    public Mesh(int mode, float[] vertices, float[] normals, float[] colors, float[] lightLevels) {
         count = vertices.length;
 
         vao = glGenVertexArrays();
@@ -23,12 +23,31 @@ public class Mesh {
         glBufferData(GL_ARRAY_BUFFER, vertices, mode);
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
 
+        // Normals
+        vbo = glGenBuffers();
+        vbos.add(vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, normals, mode);
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
+
         // Colors
         vbo = glGenBuffers();
         vbos.add(vbo);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, colors, mode);
-        glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
+        glVertexAttribPointer(2, 3, GL_FLOAT, false, 0, 0);
+
+        // Light levels
+        vbo = glGenBuffers();
+        vbos.add(vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, lightLevels, mode);
+        glVertexAttribPointer(3, 1, GL_FLOAT, false, 0, 0);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+
+        System.out.println("Mesh created with " + count + " vertices, " + count / 3 + " triangles");
     }
 
     public void render() {
@@ -36,11 +55,15 @@ public class Mesh {
         glBindVertexArray(vao);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(2);
+        glEnableVertexAttribArray(3);
 
         glDrawArrays(GL_TRIANGLES, 0, count);
 
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(2);
+        glDisableVertexAttribArray(3);
         glBindVertexArray(0);
     }
 

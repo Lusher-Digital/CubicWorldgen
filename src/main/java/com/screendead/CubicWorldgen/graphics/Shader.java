@@ -48,7 +48,9 @@ public class Shader {
 
         // Set locations for data to be sent to the vertex shader
         glBindAttribLocation(program, 0, "position");
-        glBindAttribLocation(program, 1, "color");
+        glBindAttribLocation(program, 1, "normal");
+        glBindAttribLocation(program, 2, "color");
+        glBindAttribLocation(program, 3, "lightLevel");
 
         glBindVertexArray(glGenVertexArrays());
 
@@ -98,7 +100,7 @@ public class Shader {
     public void addUniform(String name) {
         int uniformLocation = glGetUniformLocation(program, name);
         if (uniformLocation == -1) {
-            throw new RuntimeException("Could not find uniform variable '" + name + "'!");
+            System.err.println("Could not find uniform variable '" + name + "'!");
         }
         uniforms.put(name, uniformLocation);
     }
