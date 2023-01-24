@@ -5,8 +5,8 @@ import org.joml.Vector3f;
 
 @SuppressWarnings("unused")
 public class Camera {
-    public static final float SPEED = 0.01f;
-    private static final float HORZ_SENSITIVITY = 0.1f;
+    public static final float SPEED = 0.02f;
+    private static final float HORZ_SENSITIVITY = 0.15f;
     private static final float VERT_SENSITIVITY = 0.1f;
 
     private final Vector3f position;
@@ -32,12 +32,20 @@ public class Camera {
         this.farPlane = farPlane;
     }
 
-    public Matrix4f getViewMatrix() {
-        Vector3f direction = new Vector3f(
+    public Vector3f getPosition() {
+        return position;
+    }
+
+    public Vector3f getLook() {
+        return new Vector3f(
                 (float) (Math.cos(Math.toRadians(horizontalAngle)) * Math.cos(Math.toRadians(verticalAngle))),
                 (float) Math.sin(Math.toRadians(verticalAngle)),
                 (float) (Math.sin(Math.toRadians(horizontalAngle)) * Math.cos(Math.toRadians(verticalAngle)))
         ).normalize();
+    }
+
+    public Matrix4f getViewMatrix() {
+        Vector3f direction = getLook();
 
         Vector3f right = new Vector3f(direction).cross(new Vector3f(0.0f, 1.0f, 0.0f)).normalize();
         Vector3f up = new Vector3f(right).cross(direction).normalize();
@@ -77,6 +85,9 @@ public class Camera {
         position.add(velocity);
         acceleration.zero();
         velocity.mul(0.9f);
+
+        if (velocity.length() < 0.0001f)
+            velocity.zero();
     }
 
     public void rotate(float dx, float dy) {
