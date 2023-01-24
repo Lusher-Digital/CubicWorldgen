@@ -3,7 +3,6 @@
 in vec3 FragPos;
 in vec3 Normal;
 in vec3 Color;
-in float LightLevel;
 
 out vec4 color;
 

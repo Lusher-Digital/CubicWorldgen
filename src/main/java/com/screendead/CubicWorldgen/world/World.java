@@ -1,33 +1,24 @@
 package com.screendead.CubicWorldgen.world;
 
-import com.screendead.CubicWorldgen.graphics.lighting.Light;
-import com.screendead.CubicWorldgen.graphics.lighting.PointLight;
-import org.joml.Vector3f;
-
 import java.util.ArrayList;
 
 public class World {
-    private final Chunk chunk;
+    private final ArrayList<Chunk> chunks = new ArrayList<>();
 
     public World() {
-        chunk = new Chunk();
-
-        ArrayList<Light> lights = new ArrayList<>();
-        lights.add(new PointLight(
-                new Vector3f(-4.0f, 8.0f, -4.0f),
-                1.0f,
-                0.09f,
-                0.032f,
-                10.0f));
-
-        chunk.buildMesh(lights);
+        chunks.add(new Chunk(0, 0));
+        chunks.get(0).buildMesh();
     }
 
     public void render() {
-        chunk.render();
+        for (Chunk chunk : chunks) {
+            chunk.render();
+        }
     }
 
     public void destroy() {
-        chunk.destroy();
+        for (Chunk chunk : chunks) {
+            chunk.destroy();
+        }
     }
 }
