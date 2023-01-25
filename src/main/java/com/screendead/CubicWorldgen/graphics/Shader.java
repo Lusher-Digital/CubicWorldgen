@@ -50,7 +50,6 @@ public class Shader {
         glBindAttribLocation(program, 0, "position");
         glBindAttribLocation(program, 1, "normal");
         glBindAttribLocation(program, 2, "color");
-        glBindAttribLocation(program, 3, "lightLevel");
 
         glBindVertexArray(glGenVertexArrays());
 

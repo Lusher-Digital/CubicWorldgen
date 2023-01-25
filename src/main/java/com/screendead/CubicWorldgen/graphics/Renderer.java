@@ -16,12 +16,12 @@ public class Renderer {
 
     public Renderer(float aspect) {
         GL.createCapabilities();
-        glClearColor(0.0f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.5f, 0.0f, 0.4f, 1.0f);
 
         glEnable(GL_DEPTH_TEST);
-//        glEnable(GL_CULL_FACE);
-//        glCullFace(GL_BACK);
-//        glFrontFace(GL_CCW);
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
+        glFrontFace(GL_CCW);
 
         world = new World();
 
