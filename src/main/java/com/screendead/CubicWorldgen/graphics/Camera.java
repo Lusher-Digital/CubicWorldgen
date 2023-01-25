@@ -5,7 +5,8 @@ import org.joml.Vector3f;
 
 @SuppressWarnings("unused")
 public class Camera {
-    public static final float SPEED = 0.02f;
+//    public static final float SPEED = 0.02f;
+    public static final float SPEED = 1.0f;
     private static final float HORZ_SENSITIVITY = 0.15f;
     private static final float VERT_SENSITIVITY = 0.1f;
 

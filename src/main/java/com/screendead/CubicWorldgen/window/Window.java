@@ -136,7 +136,10 @@ public class Window {
             }
 
             if (System.currentTimeMillis() - timer > 1000) {
-                System.out.printf("UPS: %s, FPS: %s, TotalTicks: %s%n", ticks, frames, totalTicks);
+                System.out.printf("UPS: %s, FPS: %s, TotalTicks: %s%n",
+                        ticks,
+                        Math.min(FPS, 1000 / (millisecondsFrame / frames)),
+                        totalTicks);
                 System.out.printf("Milliseconds per tick: %s, milliseconds per frame: %s (%s max for 60fps)%n",
                         millisecondsTick / ticks, millisecondsFrame / frames, 1000 / 60);
                 System.out.printf("Max ticks per second: %s, max frames per second: %s%n",
