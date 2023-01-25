@@ -4,6 +4,7 @@ import org.joml.Vector3f;
 
 @SuppressWarnings("unused")
 public enum BlockType {
+    UNKNOWN(0, 0, 0),
     AIR(0, 0, 0),
     GRASS(0, 255, 0),
     DIRT(128, 64, 0),
