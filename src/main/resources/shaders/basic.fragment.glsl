@@ -8,5 +8,8 @@ out vec4 color;
 
 void main()
 {
-    color = vec4(Color, 1.0);
+    float depth = gl_FragCoord.z; // depth value from the depth buffer
+    vec3 result = Color * (1 - depth * depth * depth);
+    // store the result
+    color = vec4(result, 1.0);
 }

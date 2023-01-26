@@ -5,8 +5,8 @@ import org.joml.Vector3f;
 
 @SuppressWarnings("unused")
 public class Camera {
-//    public static final float SPEED = 0.02f;
-    public static final float SPEED = 1.0f;
+    public static final float SPEED = 0.005f;
+    public static final float SPEED_RUN = 0.015f;
     private static final float HORZ_SENSITIVITY = 0.15f;
     private static final float VERT_SENSITIVITY = 0.1f;
 
@@ -20,6 +20,7 @@ public class Camera {
     private float aspectRatio;
     private float nearPlane;
     private float farPlane;
+    private boolean running = false;
 
     public Camera(Vector3f position, float horizontalAngle, float verticalAngle, float fov, float aspectRatio, float nearPlane, float farPlane) {
         this.position = position;
@@ -73,7 +74,7 @@ public class Camera {
                 .add(new Vector3f(right).mul(x))
                 .add(new Vector3f(up).mul(y));
 
-        acceleration.add(movement.normalize(SPEED));
+        acceleration.add(movement.normalize(running ? SPEED_RUN : SPEED));
     }
 
     public void update(int ticksToComplete) {
@@ -116,5 +117,17 @@ public class Camera {
 
     public void setAspect(float aspect) {
         this.aspectRatio = aspect;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+    public float getNear() {
+        return nearPlane;
+    }
+
+    public float getFar() {
+        return farPlane;
     }
 }

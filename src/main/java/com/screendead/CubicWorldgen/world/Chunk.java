@@ -33,11 +33,11 @@ public class Chunk {
                             z = (float) (_z + (cz << 4)) * 0.005f,
                             y = (float) _y * 0.005f;
 
-                    float height = 1 + (64 * STBPerlin.stb_perlin_ridge_noise3(x, y, z, 2.0f, 0.5f, 1, 2));
+                    float height = 1 + (32 * STBPerlin.stb_perlin_ridge_noise3(x, y, z, 2.0f, 0.5f, 1, 2));
                     float limit = 192 - (96 * STBPerlin.stb_perlin_ridge_noise3(x + 2000, y - 1000, z + 1000, 2.0f, 0.5f, 0, 2));
 
                     if (_y < height && _y < limit) {
-                        setBlock(_x, _y, _z, BlockType.STONE);
+                        setBlock(_x, _y, _z, BlockType.GRASS);
                     }
                 }
             }

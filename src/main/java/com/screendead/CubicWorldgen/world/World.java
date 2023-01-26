@@ -3,7 +3,7 @@ package com.screendead.CubicWorldgen.world;
 import java.util.HashMap;
 
 public class World {
-    private static final int SIZE = 32;
+    private static final int SIZE = 4;
     private static final int HALF_SIZE = SIZE / 2;
 
     private final HashMap<String, Chunk> chunks = new HashMap<>();

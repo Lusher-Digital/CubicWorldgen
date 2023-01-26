@@ -18,5 +18,5 @@ void main()
     Normal = mat3(transpose(inverse(model))) * normal;
     Color = color;
 
-    gl_Position = projection * view * model * vec4(position, 1.0f);
+    gl_Position = projection * view * model * vec4(position, 1.0);
 }

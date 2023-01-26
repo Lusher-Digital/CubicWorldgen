@@ -5,18 +5,24 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
 
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 public class Renderer {
+    public int width;
+    public int height;
+
     private final Shader shader;
-    private final Camera camera;
+    public final Camera camera;
     private final World world;
 
-    public boolean wireframe = true;
+    public boolean wireframe;
 
     public Renderer(float aspect) {
         GL.createCapabilities();
-        glClearColor(0.5f, 0.0f, 0.4f, 1.0f);
+        glClearColor(0.3f, 0.4f, 1.0f, 1.0f);
 
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
@@ -45,7 +51,11 @@ public class Renderer {
         camera.update(ticksToComplete);
     }
 
-    public void render() {
+    public void render(long window) {
+        if (glGetError() != GL_NO_ERROR) {
+            System.err.println("OpenGL error: " + glGetError());
+        }
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         shader.bind();
@@ -63,6 +73,8 @@ public class Renderer {
         world.render();
 
         Shader.unbind();
+
+        glfwSwapBuffers(window);
     }
 
     public void moveCamera(float x, float y, float z) {

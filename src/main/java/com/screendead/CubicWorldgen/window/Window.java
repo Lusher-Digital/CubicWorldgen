@@ -2,6 +2,7 @@ package com.screendead.CubicWorldgen.window;
 
 import com.screendead.CubicWorldgen.graphics.Renderer;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.system.MemoryStack;
 
@@ -18,6 +19,7 @@ public class Window {
     private final long window;
     private final Input input;
     private final Renderer renderer;
+    GLFWFramebufferSizeCallback fbCallback;
 
     public Window(String title, int width, int height, boolean maximised, boolean fullscreen) {
         // Set up an error callback. The default implementation
@@ -61,11 +63,6 @@ public class Window {
         if (window == NULL)
             throw new RuntimeException("Failed to create the GLFW window");
 
-        glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-                glfwSetWindowShouldClose(window, true);
-        });
-
         Dimension windowSize = getWindowSize();
         glfwSetWindowPos(
                 window,
@@ -84,6 +81,16 @@ public class Window {
         renderer = new Renderer(aspectRatio);
 
         glfwShowWindow(window);
+
+        glfwSetFramebufferSizeCallback(window, fbCallback = new GLFWFramebufferSizeCallback() {
+            @Override
+            public void invoke(long window, int width, int height) {
+                if (width > 0 && height > 0 && (renderer.width != width || renderer.height != height)) {
+                    renderer.width = width;
+                    renderer.height = height;
+                }
+            }
+        });
     }
 
     public void loop() {
@@ -124,12 +131,10 @@ public class Window {
             if (deltaF >= 1) {
                 long start = System.currentTimeMillis();
 
-                renderer.render();
+                renderer.render(window);
 
                 long end = System.currentTimeMillis();
                 millisecondsFrame += end - start;
-
-                glfwSwapBuffers(window);
 
                 frames++;
                 deltaF--;
@@ -171,9 +176,10 @@ public class Window {
         if (input.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
             renderer.moveCamera(0, -1, 0);
         }
-        renderer.wireframe = !input.isKeyPressed(GLFW_KEY_PERIOD);
+        renderer.wireframe = input.isKeyPressed(GLFW_KEY_PERIOD);
 
-        renderer.rotateCamera(input.getMouseDX(), input.getMouseDY());
+        renderer.camera.rotate(input.getMouseDX(), input.getMouseDY());
+        renderer.camera.setRunning(input.isKeyPressed(GLFW_KEY_LEFT_SHIFT));
 
         input.update();
 
@@ -187,11 +193,12 @@ public class Window {
     public void destroy() {
         renderer.destroy();
 
-        glfwTerminate();
-
         Objects.requireNonNull(glfwSetErrorCallback(null)).free();
         glfwFreeCallbacks(window);
+
         glfwDestroyWindow(window);
+
+        glfwTerminate();
     }
 
     public Dimension getWindowSize() {
